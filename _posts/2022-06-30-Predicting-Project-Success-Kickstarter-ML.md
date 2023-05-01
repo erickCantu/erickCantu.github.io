@@ -13,6 +13,7 @@ tags:
     - neuefische
     - xgboost
     - adaboost
+    - bootcamp
 
 last_modified_at: 2022-06-30-T14:00:00-01:00
 image: /assets/images/posts/kickstarter/ecantu_Design_a_vector_illustration_for_a_website_header_with_t_4b6a29c8-3dba-4f9e-b7fe-7e7e16ea12c4.png
@@ -21,9 +22,9 @@ image: /assets/images/posts/kickstarter/ecantu_Design_a_vector_illustration_for_
 
 Machine learning has revolutionized our ability to predict outcomes by leveraging vast amounts of data to uncover hidden patterns and trends. By continually refining predictive models and adapting to new data, machine learning has not only enhanced the accuracy of predictions but also propelled innovation across industries, ultimately paving the way for a smarter, more efficient future. 
 
-## Machine Leaning to Predict Kickstarter Success
+## Machine Learning to Predict Kickstarter Success
 
-As part of the Neuefische data science bootcamp we learn different Machine Learning algorithms, methods and models. We applied these in our second project. Which I conducted it with my colleague Sue Leen Wong. In this *Machine Leaning* project we analyzed data to predict success of launching a crowdfunding project in [Kickstarter](https://www.kickstarter.com). 
+As part of the Neuefische data science bootcamp, we learn different Machine Learning algorithms, methods and models. We applied them in our second project. Which I conducted it with my colleague Sue Leen Wong. In our *Machine Leaning* project we analyzed data to predict the success of launching a crowdfunding project in [Kickstarter](https://www.kickstarter.com). 
 
 ---
 
@@ -53,11 +54,21 @@ Mr. Jacoby Stevens
 
 - Wants to support the projects most likely to succeed
 
+#### Baseline Model
+
+- Projects based in USA are likely to be successful
+
+- Evaluation Metric:
+  We train the model based on precision. Precision is the ratio of correctly predicted positives out of all of the results that were predicted positive.
+
+- Score for baseline model:
+  Precision = 57.8%, Accuracy = 55.2%
+
 #### Takeaways and Future Work
 
-- Improvement in accuracy from 55.2% to 72.0% over the baseline model
+- Improvement in accuracy from 55.2% to 72.0% over the baseline model with XGBoost.
 
-- Best projects to invest in:
+- Best project categories to invest are:
   
   - Comics, dance or publishing categories
   
@@ -65,11 +76,11 @@ Mr. Jacoby Stevens
   
   - Projects from Hong Kong, Japan or Great Britain
 
-- Worst projects to invest in are technology and food and they also have the
-  highest donation goals
-
-- Future work: Explore underlying trends in the data by year or month,
-  subcategory information
+- Worst project categories to invest are:
+  
+  - Technology 
+  
+  - Food 
 
 ---
 
