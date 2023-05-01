@@ -75,4 +75,4 @@ Mr. Jacoby Stevens
 
 ## Links
 
-The analysis is available at the [EDA_Project_KC_Housesales](https://github.com/erickCantu/EDA_Project_KC_Housesales) GitHub repository. At the end of the analysis a presentation was done to the Neuefische team and other trainees. This presentation is available at: [EDA_Project_KC_Housesales Presentation](https://github.com/erickCantu/EDA_Project_KC_Housesales/blob/project/eda_Seattle_City_Center_Housing_Market.pdf).
+The analysis is available at the [Predicting Kickstarter Project Success with Machine Learning](https://github.com/erickCantu/Predicting_Kickstarter_Project_Success) GitHub repository. At the end of the analysis a presentation was done to the Neuefische team and other trainees. This presentation is available at: [ML to predict Kickstarter success](https://github.com/erickCantu/Predicting_Kickstarter_Project_Success/blob/main/Kickstarter_Project_Staff_Meeting_Presentation.pdf).
