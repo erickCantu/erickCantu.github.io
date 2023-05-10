@@ -184,3 +184,40 @@ Installed:
 The documentation provides a suggestion to install cuda. But, I will try with [Howto/CUDA - RPM Fusion](https://rpmfusion.org/Howto/CUDA?highlight=%28%5CbCategoryHowto%5Cb%29) in the next post.
 
 Reboot the computer. 
+
+### IT BOOT TO A BLACK SCREEN
+
+It happened again, the same mistake as with the KDE version. The boot was to a black screen. This but is well documented, and according to rpmfusion documentation, the solution is in place. But, for the 530.41.03 driver version is not. Therefore you need to run the commands that are part of the[KMS (Kernel Mode Setting")](https://rpmfusion.org/Howto/NVIDIA?highlight=%28%5CbCategoryHowto%5Cb%29#KMS). Now I wonder if I should go back to the minimalistic KDE version.
+
+```bash
+sudo grubby --update-kernel=ALL --args='nvidia-drm.modeset=1'
+```
+
+### Ensure the suspend command works
+
+```bash
+sudo dnf install xorg-x11-drv-nvidia-power
+sudo systemctl enable nvidia-{suspend,resume,hibernate}
+```
+
+The package is already installed. I pressume the configuration is also available. Will see if after it suspends. 
+
+### Video Acceleration
+
+Video reproduction or streaming requires video acceleration. No need for ffmpeg drivers or media drivers. The following code is enough. 
+
+```bash
+sudo dnf install nvidia-vaapi-driver libva-utils vdpauinfo
+```
+
+### Nouveau verification
+
+Review that Nouveau is not running the following code should produce nothing.
+
+```bash
+lsmod |grep nouveau
+```
+
+
+
+In the next post, I will review installing CUDA. 
