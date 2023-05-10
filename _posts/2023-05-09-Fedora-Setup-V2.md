@@ -32,7 +32,11 @@ sudo dnf update
 sudo dnf install solaar 
 ```
 
+---
+
 ## Install NVIDIA Drivers
+
+I followed the how to documentation in [Howto/NVIDIA - RPM Fusion](https://rpmfusion.org/Howto/NVIDIA?highlight=%28%5CbCategoryHowto%5Cb%29). The documentation provides all the required steps before and after the drivers configuration. Read the complete page before installing the drivers. 
 
 ### Configure RPM Fusion
 
@@ -90,20 +94,93 @@ sudo dnf groupupdate core
    input password again: 
    ```
 
-6. - Rebooting the system is needed for MOK to enroll the new public key.
-   - On next boot MOK Management is launched and you have to choose
-     "Enroll MOK".
-   - Choose "Continue" to enroll the key or "View key 0" to show the keys
-     already enrolled.
-   - Confirm enrollment by selecting "Yes".
-   - You will be invited to enter the password generated above.
-     WARNING: keyboard is mapped to QWERTY!
-   - The new key is enrolled, and system ask you to reboot.
+6. Rebooting the system is needed for MOK to enroll the new public key. BE SURE YOU HAVE A WIRED KEYBOARD!!!
+   
+   On next boot MOK Management is launched and you have to choose
+   "Enroll MOK".
+   
+   Choose "Continue" to enroll the key or "View key 0" to show the keys
+   already enrolled.
+   
+   Confirm enrollment by selecting "Yes".
+   
+   You will be invited to enter the password generated above.
+   WARNING: keyboard is mapped to QWERTY!
+   
+   The new key is enrolled, and system ask you to reboot.
    
    You can confirm the enrollment of the new keypair once the system
    rebooted with:
-    `mokutil --list-enrolled | grep Issuer`
+   
+   ```bash
+   mokutil --list-enrolled | grep Issuer
+   ```
+   
    or with:
-    `mokutil --test-key /etc/pki/akmods/certs/public_key.der`
+   
+   ```bash
+   sudo mokutil --test-key /etc/pki/akmods/certs/public_key.der
+   ```
+   
+   which should return
+   
+   ```bash
+   /etc/pki/akmods/certs/public_key.der is already enrolled
+   ```
 
-7. 
+#### House keeping
+
+I already have 10 enrolled keys, which I habe been creating in the last days. Lets remove the ones that are not needed. For details see: [uefi - Is it possible to delete an enrolled key using mokutil without the original .der file? - Ask Ubuntu](https://askubuntu.com/questions/805152/is-it-possible-to-delete-an-
+enrolled-key-using-mokutil-without-the-original-der)
+
+1. Create a mokkeys directory.
+   
+   ```bash
+   mkdir mokkeys
+   cd mokkeys
+   ```
+
+2. List the enrolled keys by exporting them to the mokkeys directory. I use zsh, therefore the *lsa* command. Use *ll* in bash. 
+   
+   ```bash
+   mokutil --export
+   lsa
+   ```
+
+3. Review the keys content. Be careful to select only the keys that are not needed. You do not want to re-install everything again.
+   
+   ```bash
+   mokutil -l | less
+   ```
+
+4. Delete they selected keys by erasing the files name *MOK000x.der*. The command is going to ask you for a password that is needed after rebooting. Use the same password for each key. Idealy the same one that was used to enroll them.
+   
+   ```bash
+   sudo mokutil --delete MOK000x.der
+   ```
+
+5. You need to reboot the system. You will come to the blue screen that is going to ask you if you want to dele the selected keys. You do this part in a bash. Not per individual key. Reboot the system. 
+
+### Install NVIDA Drivers from rpmfusion
+
+```bash
+sudo dnf update -y
+sudo dnf install akmod-nvidia
+```
+
+```bash
+Installed:
+  akmod-nvidia-3:530.41.03-1.fc38.x86_64                                                                  
+  egl-gbm-1.1.0-4.fc38.x86_64                                                                             
+  egl-wayland-1.1.11-3.fc38.x86_64                                                                        
+  nvidia-settings-3:530.41.03-1.fc38.x86_64                                                               
+  xorg-x11-drv-nvidia-3:530.41.03-1.fc38.x86_64                                                           
+  xorg-x11-drv-nvidia-cuda-libs-3:530.41.03-1.fc38.x86_64                                                 
+  xorg-x11-drv-nvidia-kmodsrc-3:530.41.03-1.fc38.x86_64                                                   
+  xorg-x11-drv-nvidia-libs-3:530.41.03-1.fc38.x86_64                                                      
+  xorg-x11-drv-nvidia-power-3:530.41.03-1.fc38.x86_64      
+```
+
+The documentation provides a suggestion to install cuda. But, I will try with [Howto/CUDA - RPM Fusion](https://rpmfusion.org/Howto/CUDA?highlight=%28%5CbCategoryHowto%5Cb%29) in the next post.
+
+Reboot the computer. 
