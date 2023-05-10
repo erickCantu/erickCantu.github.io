@@ -15,17 +15,17 @@ last_modified_at: 2023-05-09T23:00:00-01:00
 image: /assets/images/posts/fedora38_KDE/ecantu_Create_an_abstract_paint_that_illustrates_the_fusion_of__0af24d51-1ddd-4b05-99e1-fb2ef32ee269.png
 ---
 
-WELL.. The KDE server version did not work well. The computer reboot when streaming while the CPU got temperatures around 61&deg;C. Installing NVIDIA drivers did not resolved the issue. Black screens came after booting.. A possiblity could be, missing the configuration in the boot setup to use the nvidia driver instead of the nouveau divers. Additionally there was mouse freezing, which could be fixed by using the solaar package. Bud did not had the oportunity to test it. I tried the KDE ISO version whit the same results than using the server version. 
+WELL.. The KDE server version did not work well. The computer reboot when streaming while the CPU got temperatures around 61&deg;C. Installing NVIDIA drivers did not resolved the issue. Black screens came after booting.. A possibility could be, missing the configuration in the boot setup to use the NVIDIA driver instead of the nouveau divers. Additionally there was mouse freezing, which could be fixed by using the solaar package. Bud did not had the opportunity to test it. I tried the KDE ISO version whit the same results than using the server version. 
 
-So, I am trying GNOME.  After installing the Workstation ISO and seting up as in the previous post, the rebooting problem remains. It seems that is a recurring problem with the nouveau drivers ([ABRT Analytics - Report #617657 - xorg-x11-drv-nouveau in gf100_gr_reset](https://retrace.fedoraproject.org/faf/reports/617657/)). This means that NVIDIA drivers are required; atleast is what I pressume. While using Ubuntu and loading the proprietary NVIDIA drivers, the workstation woked without any issues. In this post I am documenting how to install them. 
+So, I am trying GNOME.  After installing the Workstation ISO and setting up as in the previous post, the rebooting problem remains. It seems that is a recurring problem with the nouveau drivers ([ABRT Analytics - Report #617657 - xorg-x11-drv-nouveau in gf100_gr_reset](https://retrace.fedoraproject.org/faf/reports/617657/)). This means that NVIDIA drivers are required; at least is what I presume. While using Ubuntu and loading the proprietary NVIDIA drivers, the workstation worked without any issues. In this post I am documenting how to install them. 
 
 *The post image was created with midjourney. Prompt: /imagine Create an abstract paint that illustrates the fusion of engineering and innovation with Data Science, navigating the crossroads of expertise to create sustainable and efficient solutions using oil as the medium, with the impasto technique, emphasizing depth and contrast, and featuring a stunning midnight blue color palette. --no Letters, Text, Signature, Watermark, Logo, Stamp, Branding, Trademark, Copyright, Registered Trademark, Human, Person, People. --aspect 7:4 --s 750 --v 5 --q 2*  
 
 ---
 
-## Fix the Logitech drivers
+## Fixing Logitech drivers
 
-Before starting with configuring with the video card drivers, I setup the logitech mouse. 
+Before starting with configuring with the video card drivers, I setup the Logitech mouse. 
 
 ```bash
 sudo dnf update
@@ -130,7 +130,7 @@ sudo dnf groupupdate core
 
 #### House keeping
 
-I already have 10 enrolled keys, which I habe been creating in the last days. Lets remove the ones that are not needed. For details see: [uefi - Is it possible to delete an enrolled key using mokutil without the original .der file? - Ask Ubuntu](https://askubuntu.com/questions/805152/is-it-possible-to-delete-an-
+I already have 10 enrolled keys, which I have been creating in the last days. Lets remove the ones that are not needed. For details see: [uefi - Is it possible to delete an enrolled key using mokutil without the original .der file? - Ask Ubuntu](https://askubuntu.com/questions/805152/is-it-possible-to-delete-an-
 enrolled-key-using-mokutil-without-the-original-der)
 
 1. Create a mokkeys directory.
@@ -153,15 +153,15 @@ enrolled-key-using-mokutil-without-the-original-der)
    mokutil -l | less
    ```
 
-4. Delete they selected keys by erasing the files name *MOK000x.der*. The command is going to ask you for a password that is needed after rebooting. Use the same password for each key. Idealy the same one that was used to enroll them.
+4. Delete they selected keys by erasing the files name *MOK000x.der*. The command is going to ask you for a password that is needed after rebooting. Use the same password for each key. Ideally the same one that was used to enroll them.
    
    ```bash
    sudo mokutil --delete MOK000x.der
    ```
 
-5. You need to reboot the system. You will come to the blue screen that is going to ask you if you want to dele the selected keys. You do this part in a bash. Not per individual key. Reboot the system. 
+5. You need to reboot the system. You will come to the blue screen that is going to ask you if you want to delete the selected keys. You do this part in a bash. Not per individual key. Reboot the system. 
 
-### Install NVIDA Drivers from rpmfusion
+### Install NVIDA Drivers from RPM Fusion
 
 ```bash
 sudo dnf update -y
@@ -187,7 +187,7 @@ Reboot the computer.
 
 ### IT BOOT TO A BLACK SCREEN
 
-It happened again, the same mistake as with the KDE version. The boot was to a black screen. This but is well documented, and according to rpmfusion documentation, the solution is in place. But, for the 530.41.03 driver version is not. Therefore you need to run the commands that are part of the[KMS (Kernel Mode Setting")](https://rpmfusion.org/Howto/NVIDIA?highlight=%28%5CbCategoryHowto%5Cb%29#KMS). Now I wonder if I should go back to the minimalistic KDE version.
+It happened again, the same bug as with the KDE version. The boot was to a black screen. This bug is well documented, and according to RPM Fusion documentation, the solution is in place. However, for the 530.41.03 driver version is not. You need to run the commands that are part of the [KMS (Kernel Mode Setting")](https://rpmfusion.org/Howto/NVIDIA?highlight=%28%5CbCategoryHowto%5Cb%29#KMS). Now I wonder if I should go back to the minimalist KDE server version.
 
 ```bash
 sudo grubby --update-kernel=ALL --args='nvidia-drm.modeset=1'
@@ -200,11 +200,11 @@ sudo dnf install xorg-x11-drv-nvidia-power
 sudo systemctl enable nvidia-{suspend,resume,hibernate}
 ```
 
-The package is already installed. I pressume the configuration is also available. Will see if after it suspends. 
+The package is already installed. I presume the configuration is also available. Will see if there are any issues after it suspends. 
 
 ### Video Acceleration
 
-Video reproduction or streaming requires video acceleration. No need for ffmpeg drivers or media drivers. The following code is enough. 
+Video reproduction or streaming requires video acceleration. No need for additional ffmpeg drivers or media drivers. The following code is enough. 
 
 ```bash
 sudo dnf install nvidia-vaapi-driver libva-utils vdpauinfo
@@ -218,6 +218,16 @@ Review that Nouveau is not running the following code should produce nothing.
 lsmod |grep nouveau
 ```
 
+### Change monitor scale options
 
+By default in Fedora you can scale by 100%. This means that you can select 100% or 200% scale in the display menu. It is not possible to select something in between, e.g. 150%. This can be modified by running:
 
-In the next post, I will review installing CUDA. 
+```bash
+gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+```
+
+See: [How to Enable Fractional Scaling on Fedora Linux - OMG! Linux](https://www.omglinux.com/how-to-enable-fractional-scaling-fedora/)
+
+---
+
+In the next posts, I will review installing LaTeX, modifying GNOME, maybe trying Hyland, but definitely trying  EWW Widgets. Also we will review CUDA; this is going to be intersting.  
