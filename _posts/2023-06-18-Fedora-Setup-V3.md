@@ -15,7 +15,7 @@ tags:
     - Data Science Workstation Setup
 
 last_modified_at: 2023-06-16T23:00:00-01:00
-image: /assets/images/posts/fedora38_KDE/ecantu_Create_an_abstract_paint_that_illustrates_the_fusion_of__0af24d51-1ddd-4b05-99e1-fb2ef32ee269.png
+image: /assets/images/posts/latex/ecantu_Create_a_captivating_website_top_banner_utilizing_the_en_a9ca0251-5ec3-43f6-8b95-7bf41c9874ad.png
 ---
 
 In this post I review the steps to setup LaTeX with its flavor LuaLaTeX, TeXStudio and Pandoc. 
