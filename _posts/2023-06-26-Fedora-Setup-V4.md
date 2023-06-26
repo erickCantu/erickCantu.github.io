@@ -2,7 +2,8 @@
 title: "Fedora 38 Setup - Part IV - WSL" 
 categories: 
     - Fedora 38
-    - WSL Version
+    - WSL
+    - Work Station Setup
 tags: 
     - Fedora 38
     - Work Station
@@ -11,20 +12,17 @@ tags:
     - Windows
     - Data Science Workstation Setup
 
-last_modified_at: 2023-06-16T23:00:00-01:00
+last_modified_at: 2023-06-26T23:00:00-01:00
 image: /assets/images/posts/latex/ecantu_Create_a_captivating_website_top_banner_utilizing_the_en_a9ca0251-5ec3-43f6-8b95-7bf41c9874ad.png
 ---
 
-From time to time, I need to use a windows laptop to run a native program there.  Nowadays, Windows allows us to have Linux kernel running as a subsystem. There are plently of examples on how to install Ubuntu as its available in the Windows Store. However as discussed previously I like much better Fedora.  
+From time to time, I need to use a windows laptop to run a native program there.  Nowadays, Windows allows us to have a Linux kernel running as a subsystem. There are plently of examples on how to install Ubuntu, as its available in the Windows Store. However as discussed previously, I like much better Fedora.
 
-In this post I document how to setup Fedora 38 in WSL. The setup is based on information from [Install WSL | Microsoft Learn](https://learn.microsoft.com/en-us/windows/wsl/install) and from [Install Fedora 37 or earlier on Windows Subsystem for Linux (WSL) - DEV Community](https://dev.to/bowmanjd/install-fedora-on-windows-subsystem-for-linux-wsl-4b26).
+In this post I document how to setup Fedora 38 in WSL. The setup is based on information from [Install WSL \| Microsoft Learn](https://learn.microsoft.com/en-us/windows/wsl/install) and from [Install Fedora 37 or earlier on Windows Subsystem for Linux (WSL) - DEV Community](https://dev.to/bowmanjd/install-fedora-on-windows-subsystem-for-linux-wsl-4b26).
 
-# Fedora 3x as Windows subsystem (WSL2)
-
-### Installing Fedora 38 Container Based Build
+# Installing Fedora 38 Container Based Build
 
 1. Ensure that Virtual Maschine is enabled in the BIOS and in Windows. 
-   
    For the first step follow the computer manufacturer. Then follow the steps in [Install WSL | Microsoft Learn](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 2. Ensure WSL2 is running in Windows:
@@ -33,9 +31,9 @@ In this post I document how to setup Fedora 38 in WSL. The setup is based on inf
    wsl --set-default-version 2
    ```
    
-   If errors arise, consult google or youtube to find how to setup WSL 2 in windows. Just search for *How to setup WSL2*. As an alternative you can read [Install WSL | Microsoft Learn](https://learn.microsoft.com/en-us/windows/wsl/install).
+   If errors arise, consult google or youtube to find how to setup WSL 2 in windows. Just search for *How to setup WSL2*. As an alternative you can read [Install WSL \| Microsoft Learn](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-3. Download the latestest Fedora Container Base build from [Koji Fedora](https://koji.fedoraproject.org/koji/packageinfo?packageID=26387) eg. [Fedora-Container-Base-38-20230619.0 | Build Info | koji](https://koji.fedoraproject.org/koji/buildinfo?buildID=2217818). Be sure that the State has a green check mark and not a yellow *X* or red *-*. As this mean that the build was either canlleded or failed.  Download the [Fedora-Container-Base-38-20230619.0.x86_64.tar.xz](https://kojipkgs.fedoraproject.org//packages/Fedora-Container-Base/38/20230619.0/images/Fedora-Container-Base-38-20230619.0.x86_64.tar.xz) file and extract it, eg. WinRar. The content from the folder with the HEX name should containt the layer.tar file.  This is the required file to install Fedora.
+3. Download the latestest Fedora Container Base build from [Koji Fedora](https://koji.fedoraproject.org/koji/packageinfo?packageID=26387) eg. [Fedora-Container-Base-38-20230619.0](https://koji.fedoraproject.org/koji/buildinfo?buildID=2217818). Be sure that the State has a green check mark and not a yellow *X* or red *-*. As this mean that the build was either canlleded or failed.  Download the [Fedora-Container-Base-38-20230619.0.x86_64.tar.xz](https://kojipkgs.fedoraproject.org//packages/Fedora-Container-Base/38/20230619.0/images/Fedora-Container-Base-38-20230619.0.x86_64.tar.xz) file and extract it, eg. WinRar. The content from the folder with the HEX name should containt the layer.tar file.  This is the required file to install Fedora.
 
 4. Create a folder where Fedora will be installed. eg: C:\Users\User\AppData\Local\WSL2\Fedora38
 
@@ -84,9 +82,7 @@ In this post I document how to setup Fedora 38 in WSL. The setup is based on inf
     wsl --list --online
     ```
 
-12. 
-
-### Aferter install setup
+## Aferter install setup
 
 There are additional steps to completelly setup Fedora in wsl.  These are not required from distros on the online list.
 
@@ -166,7 +162,7 @@ There are additional steps to completelly setup Fedora in wsl.  These are not re
 
 8. Restart Fedora38 as in step 3. And you are done.
 
-### Additional steps.
+## Additional Steps
 
 The Fedora Container Base build has just the basic information lets install neofetch to find the current information
 
@@ -217,9 +213,9 @@ Clean the installation
 sudo dnf clean all
 ```
 
-### ZSH
+## ZSH
 
-Follow the steps in [Fedora 38 Setup - KDE - Server Version | An Intersection of Engineering, Agriculture, Data Science and Innovation](https://www.erickcantu.com/fedora%2038/kde/work%20station%20setup/2023/05/04/Fedora-Setup.html) to setup ZSH
+Follow the steps in [Fedora 38 Setup - KDE - Server Version \| An Intersection of Engineering, Agriculture, Data Science and Innovation](https://www.erickcantu.com/fedora%2038/kde/work%20station%20setup/2023/05/04/Fedora-Setup.html) to setup ZSH
 
 The following packages and steps are required. 
 
@@ -227,3 +223,18 @@ The following packages and steps are required.
 dnf install util-linux-user
 chsh -s $(which zsh)
 ```
+
+
+
+## Save the distribution
+
+We can backup the distribution. It allows to save the distro current state. This is achived by running in PowerShell the following commands:
+
+```bash
+mkdir BackupWSL
+cd .\BackupWSL
+wsl --export Fedora38 20230626_Fedora38_WSL.tar 
+
+```
+
+The command takes several minutes. Be patient. 
